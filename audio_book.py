@@ -1,4 +1,5 @@
 import streamlit as st # Streamlit is used to create the Streamlit application
+import gtts
 from gtts import gTTS  # (Google’s Text-to-Speech) is used to convert text to speech
 import pdfplumber      # pdfplumber is used to extract text from PDF files,
 import docx            # docx is used to extract text from DOCX files
@@ -45,9 +46,13 @@ if book:
 else:
     st.warning("Please upload a file to convert to audiobook.")
 
+lang = "en" #Choose voice, "sw" is swahili, the list can be found here: http://gtts.readthedocs.org/ or print them out on the cli using > gtts-cli --all
+tld = "co.uk" #Localised accents, "co.ke" is Kenyan, List found here: https://www.google.com/supported_domains
+
+
 # Check if all_text is defined before creating the TTS object
 if 'all_text' in locals():
-    tts = gTTS(all_text)
+    tts = gTTS(all_text, lang=lang)
     tts.save('audiobook.mp3')
 
     audio_file = open('audiobook.mp3', 'rb')
